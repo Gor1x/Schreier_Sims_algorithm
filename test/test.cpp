@@ -4,7 +4,7 @@
 void testCreating()
 {
     Permutation permutation(6);
-    assert(permutation(3) == -1);
+    assert(permutation(3) == 3);
 }
 
 int main()
