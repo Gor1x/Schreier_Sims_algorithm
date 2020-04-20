@@ -7,14 +7,15 @@ using std::string;
 Permutation::Permutation(size_t length) : length(length)
         , next(std::vector<int>(length + 1, -1))
 {
-    for (size_t i = 1; i <= length; i++)
-    {
-        next[i] = i;
-    }
+    fillNextVectorToId();
 }
 
-int Permutation::operator()(int k) const
+size_t Permutation::operator()(size_t k) const
 {
+    if (k > length)
+    {
+        return k;
+    }
     return next[k];
 }
 
@@ -54,13 +55,13 @@ Permutation::Permutation(const string &s) : length(-1)
         {
             break;
         }
-        cycles.emplace_back(Cycle(s.substr(position, closePosition - position + 1)));
+        cycles.emplace_back(s.substr(position, closePosition - position + 1));
         position = closePosition + 1;
     }
     Permutation permutation;
     while (!cycles.empty())
     {
-        permutation = cycles.back() * permutation;
+        permutation = Permutation(cycles.back()) * permutation;
         cycles.pop_back();
     }
 
@@ -71,15 +72,14 @@ Permutation::Permutation(const Cycle &cycle)
 {
     length = cycle.getMax();
     next.resize(length + 1);
+    fillNextVectorToId();
 
     auto elementsArray = cycle.getElements();
-    for (size_t i = 0; i < elementsArray.size(); i++)
+    for (size_t i = 0; i < elementsArray.size() - 1; i++)
     {
-
-        next[elementsArray[i]] = (i == elementsArray.size() - 1) ?
-                                 elementsArray[i + 1] :
-                                 elementsArray[0];
+        next[elementsArray[i]] = elementsArray[i + 1];
     }
+    next[elementsArray.back()] = elementsArray[0];
 }
 
 void Permutation::swap(Permutation &other)
@@ -91,13 +91,52 @@ void Permutation::swap(Permutation &other)
 void Permutation::print()
 {
     vector<bool> used(length + 1);
-    for (int i = 1; i <= length; i++)
+    vector<Cycle> cycles;
+    for (size_t i = 1; i <= length; i++)
     {
         if (used[i])
         {
             continue;
         }
+        vector<int> elems;
+        size_t current = i;
+        while (true)
+        {
+            used[current] = true;
+            elems.push_back(current);
+            current = next[current];
+            if (current == i)
+            {
+                break;
+            }
+        }
+        cycles.emplace_back(elems);
+    }
 
+    std::sort(cycles.begin(), cycles.end(), [](const Permutation::Cycle &a, const Permutation::Cycle &b) {
+        return a.getElements()[0] < b.getElements()[0];
+    });
+    auto ptr = std::remove_if(cycles.begin(), cycles.end(), [](const Permutation::Cycle &a) {
+        return a.getElements().size() <= 1;
+    });
+    cycles.resize(ptr - cycles.begin());
+
+    if (cycles.empty())
+    {
+        std::cout << "id" << std::endl;
+        return;
+    }
+
+    for (const auto &v : cycles)
+        v.print();
+    std::cout << std::endl;
+}
+
+void Permutation::fillNextVectorToId()
+{
+    for (size_t i = 1; i <= length; i++)
+    {
+        next[i] = i;
     }
 }
 

@@ -1,10 +1,11 @@
 #include <stdexcept>
 #include <iostream>
+#include <utility>
 #include "Permutation.h"
 
 Permutation::Cycle::Cycle(std::string s)
 {
-    if (s[0] != '(' || s.back() != ')')
+    if (s.size() <= 2 || s[0] != '(' || s.back() != ')')
     {
         throw std::logic_error("Неправильный формат цикла");
     }
@@ -34,8 +35,9 @@ Permutation::Cycle::Cycle(std::string s)
 void Permutation::Cycle::print() const
 {
     std::cout << "(";
-    for (auto v : elements)
-        std::cout << v << " ";
+    for (size_t i = 0; i < elements.size() - 1; i++)
+        std::cout << elements[i] << " ";
+    std::cout << elements.back();
     std::cout << ")";
 }
 
@@ -66,4 +68,11 @@ const vector<int> &Permutation::Cycle::getElements() const
 {
     return elements;
 }
+
+Permutation::Cycle::Cycle(vector<int> vec) : elements(std::move(vec))
+{
+    normalize();
+}
+
+Permutation::Cycle::Cycle() {}
 

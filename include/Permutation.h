@@ -26,7 +26,7 @@ public:
      * @param k Некоторый элемент перестановки
      * @return Возвращает число, в которое переходит @_a k
      */
-    int operator()(int k) const;
+    size_t operator()(size_t k) const;
 
     int get(int k) const;
 
@@ -42,16 +42,22 @@ public:
     void swap(Permutation &other);
 
 private:
+    void fillNextVectorToId();
+
     void set(int where, int what);
 
-    int length;
+    size_t length;
     vector<int> next;
 };
 
 class Permutation::Cycle
 {
 public:
+    Cycle();
+
     Cycle(std::string s);
+
+    Cycle(vector<int> vector);
 
     int get(int k) const;
 
@@ -59,8 +65,9 @@ public:
 
     const vector<int> &getElements() const;
 
-private:
     void print() const;
+
+private:
 
     void normalize();
 
