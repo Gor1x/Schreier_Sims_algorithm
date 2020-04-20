@@ -11,5 +11,5 @@ SET(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} ${superflags}")
 include_directories("include")
 
 add_executable(Schreier_Sims_algorithm src/Permutation.cpp src/Permutation_Cycle.cpp src/main.cpp)
-add_executable(TestAlgorithm src/Permutation.cpp src/Permutation_Cycle.cpp test/test.cpp)
-add_executable(FastTest src/main.cpp)
+add_executable(TestAlgorithm src/Permutation.cpp src/Permutation_Cycle.cpp test/Test.cpp test/test.cpp)
+add_executable(FastTest src/main.cpp test/SchreierSimsTest.cpp include/SchreierSimsTest.h)

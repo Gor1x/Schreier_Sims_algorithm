@@ -12,27 +12,21 @@ class Permutation
 private:
     class Cycle;
 public:
-    /**
-     * @brief Создание объекта перестановки длины length
-     * @param length Длина перестановки, количество элементов в ней.
-     */
+
     explicit Permutation(size_t length = 0);
 
     Permutation(const std::string &s);
 
     Permutation(const Cycle &cycle);
 
-    /**
-     * @param k Некоторый элемент перестановки
-     * @return Возвращает число, в которое переходит @_a k
-     */
     size_t operator()(size_t k) const;
 
     int get(int k) const;
 
-    /**
-     * @return Длина перестановки
-     */
+    void pow(int n);
+
+    void inverse();
+
     int size() const;
 
     friend Permutation operator*(const Permutation &, const Permutation &);

@@ -140,5 +140,39 @@ void Permutation::fillNextVectorToId()
     }
 }
 
+void Permutation::pow(int n)
+{
+    if (n == 0)
+    {
+        Permutation(size()).swap(*this);
+    }
+    else if (n < 0)
+    {
+        pow(-n);
+        inverse();
+    }
+    else
+    {
+        Permutation another(*this);
+        another.pow(n / 2);
+        another = another * another;
+        if (n % 2)
+        {
+            another = another * (*this);
+        }
+        another.swap(*this);
+    }
+}
+
+void Permutation::inverse()
+{
+    Permutation permutation(size());
+    for (size_t i = 1; i <= length; i++)
+    {
+        permutation.set(get(i), i);
+    }
+    swap(permutation);
+}
+
 
 
