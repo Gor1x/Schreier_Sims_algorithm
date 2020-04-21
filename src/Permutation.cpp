@@ -88,7 +88,57 @@ void Permutation::swap(Permutation &other)
     next.swap(other.next);
 }
 
-void Permutation::print()
+void Permutation::print() const
+{
+    std::cout << toString();
+}
+
+void Permutation::fillNextVectorToId()
+{
+    for (size_t i = 1; i <= length; i++)
+    {
+        next[i] = i;
+    }
+}
+
+Permutation &Permutation::pow(int n)
+{
+    if (n == 0)
+    {
+        Permutation(size()).swap(*this);
+        return *this;
+    }
+    else if (n < 0)
+    {
+        pow(-n);
+        inverse();
+    }
+    else
+    {
+        Permutation another(*this);
+        another.pow(n / 2);
+        another = another * another;
+        if (n % 2)
+        {
+            another = another * (*this);
+        }
+        another.swap(*this);
+    }
+    return *this;
+}
+
+Permutation &Permutation::inverse()
+{
+    Permutation permutation(size());
+    for (size_t i = 1; i <= length; i++)
+    {
+        permutation.set(get(i), i);
+    }
+    swap(permutation);
+    return *this;
+}
+
+vector<Permutation::Cycle> Permutation::getCycles() const
 {
     vector<bool> used(length + 1);
     vector<Cycle> cycles;
@@ -120,59 +170,24 @@ void Permutation::print()
         return a.getElements().size() <= 1;
     });
     cycles.resize(ptr - cycles.begin());
+    return cycles;
+}
+
+std::string Permutation::toString() const
+{
+    auto cycles = getCycles();
 
     if (cycles.empty())
     {
-        std::cout << "id" << std::endl;
-        return;
+        return "id";
     }
 
+    std::string answer;
     for (const auto &v : cycles)
-        v.print();
-    std::cout << std::endl;
+        answer += v.toString();
+    return answer;
 }
 
-void Permutation::fillNextVectorToId()
-{
-    for (size_t i = 1; i <= length; i++)
-    {
-        next[i] = i;
-    }
-}
-
-void Permutation::pow(int n)
-{
-    if (n == 0)
-    {
-        Permutation(size()).swap(*this);
-    }
-    else if (n < 0)
-    {
-        pow(-n);
-        inverse();
-    }
-    else
-    {
-        Permutation another(*this);
-        another.pow(n / 2);
-        another = another * another;
-        if (n % 2)
-        {
-            another = another * (*this);
-        }
-        another.swap(*this);
-    }
-}
-
-void Permutation::inverse()
-{
-    Permutation permutation(size());
-    for (size_t i = 1; i <= length; i++)
-    {
-        permutation.set(get(i), i);
-    }
-    swap(permutation);
-}
 
 
 

@@ -34,11 +34,7 @@ Permutation::Cycle::Cycle(std::string s)
 
 void Permutation::Cycle::print() const
 {
-    std::cout << "(";
-    for (size_t i = 0; i < elements.size() - 1; i++)
-        std::cout << elements[i] << " ";
-    std::cout << elements.back();
-    std::cout << ")";
+    std::cout << toString() << std::endl;
 }
 
 void Permutation::Cycle::normalize()
@@ -75,4 +71,14 @@ Permutation::Cycle::Cycle(vector<int> vec) : elements(std::move(vec))
 }
 
 Permutation::Cycle::Cycle() {}
+
+std::string Permutation::Cycle::toString() const
+{
+    std::string answer = "(";
+    for (size_t i = 0; i < elements.size() - 1; i++)
+        answer += std::to_string(elements[i]) + " ";
+    answer += std::to_string(elements.back());
+    answer += ")";
+    return answer;
+}
 

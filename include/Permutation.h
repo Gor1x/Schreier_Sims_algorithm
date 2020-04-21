@@ -12,6 +12,7 @@ class Permutation
 private:
     class Cycle;
 public:
+    friend class SchreierSimsTest;
 
     explicit Permutation(size_t length = 0);
 
@@ -23,15 +24,19 @@ public:
 
     int get(int k) const;
 
-    void pow(int n);
+    Permutation &pow(int n);
 
-    void inverse();
+    Permutation &inverse();
 
     int size() const;
 
     friend Permutation operator*(const Permutation &, const Permutation &);
 
-    void print();
+    vector<Cycle> getCycles() const;
+
+    std::string toString() const;
+
+    void print() const;
 
     void swap(Permutation &other);
 
@@ -60,6 +65,8 @@ public:
     const vector<int> &getElements() const;
 
     void print() const;
+
+    std::string toString() const;
 
 private:
 
