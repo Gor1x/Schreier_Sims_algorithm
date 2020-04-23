@@ -39,8 +39,8 @@ public:
 
     void swap(Permutation &other);
 
-private:
     vector<Cycle> getCycles() const;
+private:
 
     void fillNextVectorToId();
 

@@ -8,12 +8,8 @@ using namespace std;
 
 int main()
 {
-    auto generators = vector<Permutation>({
-                                                  Permutation("(1 2 3)"),
-                                                  Permutation("(1 3 4)"),
-                                                  Permutation("(2 4 3)")
-                                          });
-    SchreierTree tree(generators, 1);
+
+    SchreierTree tree({"(1 2 3)", "(1 3 4)", "(2 4 3)"}, 1);
     tree.print();
 
     cout << tree.getWay(4).toString();

@@ -9,7 +9,6 @@ using std::queue;
 SchreierTree::SchreierTree(vector<Permutation> gens, int head) : generators(std::move(gens))
         , head(head)
 {
-
     oppositeGenerators = generators;
     for (auto &perm : oppositeGenerators)
     {
@@ -34,7 +33,7 @@ void SchreierTree::build()
 
         for (size_t i = 0; i < generators.size(); i++)
         {
-            auto v = generators[i];
+            auto v = oppositeGenerators[i];
             int next = v.getNext(current);
             if (next == current)
             {
@@ -57,7 +56,7 @@ void SchreierTree::print()
     for (auto &v : parentNumber)
     {
         int vertex = v.first;
-        Permutation &perm = oppositeGenerators[v.second];
+        Permutation &perm = generators[v.second];
         int parent = perm.getNext(vertex);
 
         std::cout << vertex << " ——> " << parent << " | " << perm.toString() << std::endl;
@@ -69,9 +68,23 @@ Permutation SchreierTree::getWay(int k) const
     Permutation answer;
     while (k != head)
     {
-        auto &permutation = oppositeGenerators[parentNumber.at(k)];
+        auto &permutation = generators[parentNumber.at(k)];
         answer = permutation * answer;
         k = permutation.getNext(k);
     }
     return answer;
 }
+
+static vector<Permutation> getVectorFromList(const std::initializer_list<std::string> &gens)
+{
+    vector<Permutation> perms;
+    perms.reserve(gens.size());
+    for (auto &v : gens)
+    {
+        perms.emplace_back(v);
+    }
+    return perms;
+}
+
+SchreierTree::SchreierTree(std::initializer_list<std::string> gens, int head) :
+        SchreierTree(getVectorFromList(gens), head) {}

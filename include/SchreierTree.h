@@ -7,8 +7,11 @@
 
 class SchreierTree
 {
+    friend class SchreierSimsTest;
 public:
     SchreierTree(vector<Permutation> gens, int head);
+
+    SchreierTree(std::initializer_list<std::string> gens, int head);
 
     void print();
 
