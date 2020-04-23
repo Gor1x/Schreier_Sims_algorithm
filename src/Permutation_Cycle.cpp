@@ -30,6 +30,13 @@ Permutation::Cycle::Cycle(std::string s)
     elements.shrink_to_fit();
 
     normalize();
+    countNext();
+}
+
+Permutation::Cycle::Cycle(vector<int> vec) : elements(std::move(vec))
+{
+    normalize();
+    countNext();
 }
 
 void Permutation::Cycle::print() const
@@ -44,20 +51,12 @@ void Permutation::Cycle::normalize()
 
 int Permutation::Cycle::get(int k) const
 {
-    auto pos = find(elements.begin(), elements.end(), k);
-    if (pos + 1 == elements.end())
-    {
-        return *elements.begin();
-    }
-    else
-    {
-        return *(pos + 1);
-    }
+    return next.at(k);
 }
 
 int Permutation::Cycle::getMax() const
 {
-    return *max_element(elements.begin(), elements.end());
+    return next.rbegin()->first;
 }
 
 const vector<int> &Permutation::Cycle::getElements() const
@@ -65,12 +64,7 @@ const vector<int> &Permutation::Cycle::getElements() const
     return elements;
 }
 
-Permutation::Cycle::Cycle(vector<int> vec) : elements(std::move(vec))
-{
-    normalize();
-}
 
-Permutation::Cycle::Cycle() {}
 
 std::string Permutation::Cycle::toString() const
 {
@@ -80,5 +74,12 @@ std::string Permutation::Cycle::toString() const
     answer += std::to_string(elements.back());
     answer += ")";
     return answer;
+}
+
+void Permutation::Cycle::countNext()
+{
+    for (size_t i = 0; i < elements.size() - 1; i++)
+        next[elements[i]] = elements[i + 1];
+    next[elements.back()] = elements[0];
 }
 

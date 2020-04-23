@@ -35,8 +35,6 @@ private:
     static void powNegative2();
 
     static void powNegative3();
-
-
 };
 
 

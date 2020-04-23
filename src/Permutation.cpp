@@ -39,7 +39,7 @@ void Permutation::set(int where, int what)
     next[where] = what;
 }
 
-int Permutation::get(int k) const
+int Permutation::getNext(int k) const
 {
     return operator()(k);
 }
@@ -132,7 +132,7 @@ Permutation &Permutation::inverse()
     Permutation permutation(size());
     for (size_t i = 1; i <= length; i++)
     {
-        permutation.set(get(i), i);
+        permutation.set(getNext(i), i);
     }
     swap(permutation);
     return *this;

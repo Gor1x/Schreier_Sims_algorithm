@@ -4,6 +4,7 @@
 #include <cstddef>
 #include <vector>
 #include <algorithm>
+#include <map>
 
 using std::vector;
 
@@ -18,11 +19,11 @@ public:
 
     Permutation(const std::string &s);
 
-    Permutation(const Cycle &cycle);
+    explicit Permutation(const Cycle &cycle);
 
     size_t operator()(size_t k) const;
 
-    int get(int k) const;
+    int getNext(int k) const;
 
     Permutation &pow(int n);
 
@@ -32,8 +33,6 @@ public:
 
     friend Permutation operator*(const Permutation &, const Permutation &);
 
-    vector<Cycle> getCycles() const;
-
     std::string toString() const;
 
     void print() const;
@@ -41,6 +40,8 @@ public:
     void swap(Permutation &other);
 
 private:
+    vector<Cycle> getCycles() const;
+
     void fillNextVectorToId();
 
     void set(int where, int what);
@@ -52,11 +53,11 @@ private:
 class Permutation::Cycle
 {
 public:
-    Cycle();
+    Cycle() = default;
 
-    Cycle(std::string s);
+    explicit Cycle(std::string s);
 
-    Cycle(vector<int> vector);
+    explicit Cycle(vector<int> vector);
 
     int get(int k) const;
 
@@ -72,6 +73,9 @@ private:
 
     void normalize();
 
+    void countNext();
+
+    std::map<int, int> next;
     vector<int> elements;
 };
 
