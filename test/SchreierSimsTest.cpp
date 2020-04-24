@@ -119,6 +119,10 @@ void SchreierSimsTest::runTreeTests()
     treeTest1();
     treeTest2();
     treeTest3();
+
+    orbitTest1();
+    orbitTest2();
+    orbitTest3();
 }
 
 void SchreierSimsTest::treeTest1()
@@ -159,6 +163,24 @@ void SchreierSimsTest::treeTest3()
              && tree.getWay(2).toString() == "(2 3)"
              && tree.getWay(3).toString() == "id"
              && tree.getWay(1).toString() == "(1 3)");
+}
+
+void SchreierSimsTest::orbitTest1()
+{
+    SchreierTree tree({"(1 2)", "(4 5 3)", "(3 8 7 2)"}, 1);
+    DO_CHECK(tree.getOrbit() == vector<int>({1, 2, 3, 4, 5, 7, 8}));
+}
+
+void SchreierSimsTest::orbitTest2()
+{
+    SchreierTree tree({"(17 21)", "(21 13)", "(4 5 6)"}, 17);
+    DO_CHECK(tree.getOrbit() == vector<int>({13, 17, 21}));
+}
+
+void SchreierSimsTest::orbitTest3()
+{
+    SchreierTree tree({"(17 21)", "(21 13)", "(4 5 6)"}, 8);
+    DO_CHECK(tree.getOrbit() == vector<int>({8}));
 }
 
 

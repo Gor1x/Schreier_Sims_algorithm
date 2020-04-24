@@ -12,10 +12,14 @@ public:
 
 private:
     static void treeTest1();
-
     static void treeTest2();
-
     static void treeTest3();
+
+    static void orbitTest1();
+
+    static void orbitTest2();
+
+    static void orbitTest3();
 
     static void runTreeTests();
 

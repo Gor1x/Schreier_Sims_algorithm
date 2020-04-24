@@ -15,11 +15,16 @@ public:
 
     void print();
 
+    size_t size() const;
+
     Permutation getWay(int k) const;
+
+    const vector<int> &getOrbit() const;
 
 private:
     void build();
 
+    std::vector<int> orbit;
     std::map<int, int> parentNumber;
     std::vector<Permutation> generators;
     std::vector<Permutation> oppositeGenerators;

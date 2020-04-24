@@ -49,6 +49,12 @@ void SchreierTree::build()
             que.push(next);
         }
     }
+
+    orbit.push_back(head);
+    for (auto v : parentNumber)
+        orbit.push_back(v.first);
+    sort(orbit.begin(), orbit.end());
+
 }
 
 void SchreierTree::print()
@@ -86,5 +92,17 @@ static vector<Permutation> getVectorFromList(const std::initializer_list<std::st
     return perms;
 }
 
+size_t SchreierTree::size() const
+{
+    return getOrbit().size();
+}
+
+
 SchreierTree::SchreierTree(std::initializer_list<std::string> gens, int head) :
         SchreierTree(getVectorFromList(gens), head) {}
+
+
+const vector<int> &SchreierTree::getOrbit() const
+{
+    return orbit;
+}
