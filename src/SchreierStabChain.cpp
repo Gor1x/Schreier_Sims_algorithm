@@ -2,6 +2,7 @@
 
 #include <utility>
 #include <set>
+#include <iostream>
 
 SchreierStabChain::SchreierStabChain(size_t n, vector<Permutation> permutations) : count(n)
         , strongGenerators(std::move(permutations))
@@ -28,12 +29,17 @@ static vector<Permutation> getVectorFromList(const std::initializer_list<std::st
 void SchreierStabChain::build()
 {
     vector<Permutation> currentG = strongGenerators;
-    for (int k = 1; currentG.size() > 1 || (!currentG.empty() && currentG.back().toString() == "id"); k++)
+    for (int k = 1; currentG.size() > 0 && (currentG.size() > 1 || currentG.back().toString() != "id"); k++)
     {
+        std::cout << "new iteration " << std::endl;
+
         trees.emplace_back(SchreierTree(currentG, base[k]));
 
         const auto &currentTree = trees.back();
         const auto &orbit = currentTree.getOrbit();
+
+        currentTree.print();
+
 
         vector<Permutation> newG = currentG;
 
@@ -54,9 +60,10 @@ void SchreierStabChain::build()
         currentG.swap(newG);
     }
 
-    size_t pr = 0;
-    for (auto v : trees)
-        pr *= v.size();
+    size_t pr = 1;
+    for (size_t i = 0; i < trees.size(); i++)
+        pr *= trees[i].size();
+    groupSize = pr;
 }
 
 bool SchreierStabChain::isGreatForNewG(Permutation permutation, std::map<std::pair<int, int>, Permutation> &used)

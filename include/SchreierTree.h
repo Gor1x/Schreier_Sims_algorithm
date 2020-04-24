@@ -13,7 +13,7 @@ public:
 
     SchreierTree(std::initializer_list<std::string> gens, int head);
 
-    void print();
+    void print() const;
 
     size_t size() const;
 

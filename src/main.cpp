@@ -10,6 +10,6 @@ using namespace std;
 int main()
 {
     SchreierStabChain stabChain(5, {"(1 2)"});
-    cout << stabChain.size();
+    cout << stabChain.getSize();
     return 0;
 }
