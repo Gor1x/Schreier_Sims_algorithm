@@ -16,16 +16,12 @@ public:
     friend class SchreierSimsTest;
 
     Permutation(Permutation &&other) noexcept;
-
     Permutation(const Permutation &other) = default;
+    explicit Permutation(size_t length = 0);
+    Permutation(const std::string &s);
+    explicit Permutation(const Cycle &cycle);
 
     Permutation &operator=(const Permutation &other) = default;
-
-    explicit Permutation(size_t length = 0);
-
-    Permutation(const std::string &s);
-
-    explicit Permutation(const Cycle &cycle);
 
     size_t operator()(size_t k) const;
 

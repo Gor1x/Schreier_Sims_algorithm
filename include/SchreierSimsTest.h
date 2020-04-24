@@ -16,13 +16,10 @@ private:
     static void treeTest3();
 
     static void orbitTest1();
-
     static void orbitTest2();
-
     static void orbitTest3();
 
     static void runTreeTests();
-
     static void runPermutationTests();
 
     static void stringConstructor1();

@@ -57,12 +57,12 @@ void SchreierTree::build()
 
 }
 
-void SchreierTree::print()
+void SchreierTree::print() const
 {
     for (auto &v : parentNumber)
     {
         int vertex = v.first;
-        Permutation &perm = generators[v.second];
+        const Permutation &perm = generators.at(v.second);
         int parent = perm.getNext(vertex);
 
         std::cout << vertex << " ——> " << parent << " | " << perm.toString() << std::endl;

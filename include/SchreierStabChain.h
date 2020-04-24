@@ -12,18 +12,17 @@ public:
 
     size_t getSize();
 
+    bool groupHasPermutation(const Permutation &permutation);
+
 private:
     void build();
-
-    bool isGreatForNewG(Permutation permutation, std::map<std::pair<int, int>, Permutation> &used);
 
     size_t count;
     vector<int> base;
     vector<Permutation> strongGenerators;
     vector<SchreierTree> trees;
 
-    size_t groupSize;
-
+    size_t groupSize = 0;
 };
 
 #endif //SCHREIER_SIMS_ALGORITHM_SCHREIERSTABCHAIN_H
