@@ -123,6 +123,10 @@ void SchreierSimsTest::runTreeTests()
     orbitTest1();
     orbitTest2();
     orbitTest3();
+
+    orbitContains1();
+    orbitContains2();
+    orbitContains3();
 }
 
 void SchreierSimsTest::treeTest1()
@@ -181,6 +185,24 @@ void SchreierSimsTest::orbitTest3()
 {
     SchreierTree tree({"(17 21)", "(21 13)", "(4 5 6)"}, 8);
     DO_CHECK(tree.getOrbit() == vector<int>({8}));
+}
+
+void SchreierSimsTest::orbitContains1()
+{
+    SchreierTree tree({"(17 21)", "(21 13)", "(4 5 6)"}, 8);
+    DO_CHECK(!tree.contains(17));
+}
+
+void SchreierSimsTest::orbitContains2()
+{
+    SchreierTree tree({"(17 21)", "(21 13)", "(4 5 6)"}, 17);
+    DO_CHECK(tree.contains(13) && tree.contains(21));
+}
+
+void SchreierSimsTest::orbitContains3()
+{
+    SchreierTree tree({"(1 2)", "(4 5 3)", "(3 8 7 2)"}, 1);
+    DO_CHECK(tree.contains(5) && tree.contains(8));
 }
 
 

@@ -106,3 +106,13 @@ const vector<int> &SchreierTree::getOrbit() const
 {
     return orbit;
 }
+
+bool SchreierTree::contains(int element) const
+{
+    if (orbitSet.empty())
+    {
+        for (auto v : orbit)
+            orbitSet.insert(v);
+    }
+    return orbitSet.count(element);
+}

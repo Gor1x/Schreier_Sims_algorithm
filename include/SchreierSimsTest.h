@@ -38,6 +38,12 @@ private:
     static void powNegative1();
     static void powNegative2();
     static void powNegative3();
+
+    static void orbitContains1();
+
+    static void orbitContains2();
+
+    static void orbitContains3();
 };
 
 

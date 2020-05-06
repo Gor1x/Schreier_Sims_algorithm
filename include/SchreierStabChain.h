@@ -10,7 +10,9 @@ public:
 
     SchreierStabChain(size_t n, std::initializer_list<std::string> strs);
 
-    size_t getSize();
+    size_t getSize() const;
+
+    size_t getBaseSize() const;
 
     bool groupHasPermutation(const Permutation &permutation);
 
@@ -18,11 +20,12 @@ private:
     void build();
 
     size_t count;
-    vector<int> base;
     vector<Permutation> strongGenerators;
     vector<SchreierTree> trees;
 
     size_t groupSize = 0;
+    size_t baseSize = 0;
+    vector<size_t> base;
 };
 
 #endif //SCHREIER_SIMS_ALGORITHM_SCHREIERSTABCHAIN_H

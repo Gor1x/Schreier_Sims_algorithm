@@ -7,10 +7,7 @@
 SchreierStabChain::SchreierStabChain(size_t n, vector<Permutation> permutations) : count(n)
         , strongGenerators(std::move(permutations))
 {
-    base.resize(n + 1);
-    for (size_t i = 1; i <= n; i++)
-        base[i] = i;
-
+    base.push_back(0);
     build();
 }
 
@@ -58,6 +55,7 @@ void SchreierStabChain::build()
     vector<Permutation> currentG = strongGenerators;
     for (int k = 1; currentG.size() > 0; k++)
     {
+        base.push_back(k);
         trees.emplace_back(SchreierTree(currentG, base[k]));
         trees.back().print();
         std::cout << std::endl;
@@ -83,17 +81,29 @@ void SchreierStabChain::build()
     for (const auto &tree : trees)
         pr *= tree.size();
     groupSize = pr;
+    baseSize = base.size();
 }
 
 SchreierStabChain::SchreierStabChain(size_t n, std::initializer_list<std::string> list)
         : SchreierStabChain(n, getVectorFromList(list)) {}
 
-size_t SchreierStabChain::getSize()
+size_t SchreierStabChain::getSize() const
 {
     return groupSize;
 }
 
+/*
 bool SchreierStabChain::groupHasPermutation(const Permutation &permutation)
 {
+    for (size_t i = 1; i <= baseSize; i++)
+    {
+        auto next = permutation.getNext(i);
+       //. if (trees[i - 1].)
+    }
+}
+*/
 
+size_t SchreierStabChain::getBaseSize() const
+{
+    return baseSize;
 }

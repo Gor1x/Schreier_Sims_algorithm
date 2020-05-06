@@ -2,6 +2,7 @@
 #define SCHREIER_SIMS_ALGORITHM_SCHREIERTREE_H
 
 #include <vector>
+#include <set>
 
 #include "Permutation.h"
 
@@ -21,8 +22,12 @@ public:
 
     const vector<int> &getOrbit() const;
 
+    bool contains(int element) const;
+
 private:
     void build();
+
+    mutable std::set<int> orbitSet;
 
     std::vector<int> orbit;
     std::map<int, int> parentNumber;
