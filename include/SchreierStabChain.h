@@ -7,16 +7,20 @@ class SchreierStabChain
 {
 public:
     SchreierStabChain(size_t n, vector<Permutation> permutations);
-
     SchreierStabChain(size_t n, std::initializer_list<std::string> strs);
 
     size_t getSize() const;
-
     size_t getBaseSize() const;
 
-    bool groupHasPermutation(const Permutation &permutation);
+    bool hasPermutation(Permutation permutation);
+
+    bool hasPermutation(const std::string &permutation);
+
+    void printAllGroup() const;
 
 private:
+    void printing(size_t lvl, Permutation permutation) const;
+
     void build();
 
     size_t count;

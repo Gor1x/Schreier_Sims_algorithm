@@ -24,8 +24,12 @@ public:
 
     bool contains(int element) const;
 
+    const vector<Permutation> &getTreePermutations() const;
+
 private:
     void build();
+
+    void fillTreePermutations();
 
     mutable std::set<int> orbitSet;
 
@@ -34,6 +38,8 @@ private:
     std::vector<Permutation> generators;
     std::vector<Permutation> oppositeGenerators;
     int head;
+
+    std::vector<Permutation> treePermutations;
 };
 
 

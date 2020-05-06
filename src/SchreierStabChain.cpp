@@ -65,11 +65,16 @@ void SchreierStabChain::build()
         vector<Permutation> newG;
 
         std::map<std::pair<int, int>, Permutation> used;
+
         for (auto y : orbit)
         {
             for (const auto &perm : currentG)
             {
-                auto permutation = currentTree.getWay(perm(y)).inverse() * perm * currentTree.getWay(y);
+                //Здесь нужно учитывать, что "ребра" в образующих шраера в другую сторону, то есть получающиеся
+                //перестановки надо развернуть.
+
+                auto permutation = currentTree.getWay(perm.getNext(y)) * perm * currentTree.getWay(y).inverse();
+
                 auto str = permutation.toString();
                 processPermutation(permutation, newG, count, used);
             }
@@ -92,18 +97,50 @@ size_t SchreierStabChain::getSize() const
     return groupSize;
 }
 
-/*
-bool SchreierStabChain::groupHasPermutation(const Permutation &permutation)
+
+bool SchreierStabChain::hasPermutation(Permutation permutation)
 {
-    for (size_t i = 1; i <= baseSize; i++)
+    for (size_t i = 1; i < baseSize; i++)
     {
         auto next = permutation.getNext(i);
-       //. if (trees[i - 1].)
+        if (!trees[i - 1].contains(next))
+        {
+            return false;
+        }
+        permutation = trees[i - 1].getWay(next) * permutation;
     }
+    return permutation.toString() == "id";
 }
-*/
+
 
 size_t SchreierStabChain::getBaseSize() const
 {
     return baseSize;
+}
+
+bool SchreierStabChain::hasPermutation(const std::string &permutation)
+{
+    if (permutation == "id")
+    {
+        return true;
+    }
+    return hasPermutation(Permutation(permutation));
+}
+
+void SchreierStabChain::printAllGroup() const
+{
+    printing(0, Permutation());
+}
+
+void SchreierStabChain::printing(size_t lvl, Permutation permutation) const
+{
+    if (lvl == baseSize - 1)
+    {
+        std::cout << permutation.toString() << "\n";
+        return;
+    }
+    for (const auto &treePermutation : trees[lvl].getTreePermutations())
+    {
+        printing(lvl + 1, treePermutation * permutation);
+    }
 }

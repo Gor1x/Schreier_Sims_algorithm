@@ -16,6 +16,7 @@ SchreierTree::SchreierTree(vector<Permutation> gens, int head) : generators(std:
     }
 
     build();
+    fillTreePermutations();
 }
 
 void SchreierTree::build()
@@ -115,4 +116,17 @@ bool SchreierTree::contains(int element) const
             orbitSet.insert(v);
     }
     return orbitSet.count(element);
+}
+
+const vector<Permutation> &SchreierTree::getTreePermutations() const
+{
+    return treePermutations;
+}
+
+void SchreierTree::fillTreePermutations()
+{
+    for (auto v : orbit)
+    {
+        treePermutations.emplace_back(getWay(v));
+    }
 }
