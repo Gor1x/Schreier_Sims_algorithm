@@ -9,7 +9,7 @@ public:
     SchreierStabChain(size_t n, vector<Permutation> permutations);
     SchreierStabChain(size_t n, std::initializer_list<std::string> strs);
 
-    size_t getSize() const;
+    size_t getGroupSize() const;
     size_t getBaseSize() const;
 
     bool hasPermutation(Permutation permutation);

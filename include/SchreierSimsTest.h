@@ -44,6 +44,16 @@ private:
     static void orbitContains2();
 
     static void orbitContains3();
+
+    static void runStabChainTests();
+
+    static void groupSize1();
+
+    static void groupSize2();
+
+    static void groupSize3();
+
+    static void groupSize4();
 };
 
 

@@ -15,6 +15,7 @@ private:
 public:
     friend class SchreierSimsTest;
 
+    Permutation(const vector<int> &next);
     Permutation(Permutation &&other) noexcept;
     Permutation(const Permutation &other) = default;
     explicit Permutation(size_t length = 0);

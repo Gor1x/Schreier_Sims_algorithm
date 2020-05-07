@@ -26,7 +26,7 @@ Permutation operator*(const Permutation &first, const Permutation &second)
     {
         perm.set(i, first(second(i)));
     }
-    return std::move(perm);
+    return perm;
 }
 
 int Permutation::size() const
@@ -191,6 +191,11 @@ std::string Permutation::toString() const
 Permutation::Permutation(Permutation &&other) noexcept
 {
     swap(other);
+}
+
+Permutation::Permutation(const vector<int> &next) : length(next.size() - 1)
+        , next(next)
+{
 }
 
 

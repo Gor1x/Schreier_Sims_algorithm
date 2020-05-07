@@ -1,6 +1,7 @@
 #include "SchreierSimsTest.h"
 #include <Permutation.h>
 #include <iostream>
+#include <SchreierStabChain.h>
 
 void SchreierSimsTest::runAllTests()
 {
@@ -8,6 +9,8 @@ void SchreierSimsTest::runAllTests()
 
     runPermutationTests();
     runTreeTests();
+
+    runStabChainTests();
 
     showFinalResult();
 }
@@ -203,6 +206,38 @@ void SchreierSimsTest::orbitContains3()
 {
     SchreierTree tree({"(1 2)", "(4 5 3)", "(3 8 7 2)"}, 1);
     DO_CHECK(tree.contains(5) && tree.contains(8));
+}
+
+void SchreierSimsTest::runStabChainTests()
+{
+    groupSize1();
+    groupSize2();
+    groupSize3();
+    groupSize4();
+}
+
+void SchreierSimsTest::groupSize1()
+{
+    SchreierStabChain stabChain(1, {});
+    DO_CHECK(stabChain.getGroupSize() == 1);
+}
+
+void SchreierSimsTest::groupSize2()
+{
+    SchreierStabChain stabChain(3, {"(1 2)", "(2 3)"});
+    DO_CHECK(stabChain.getGroupSize() == 6);
+}
+
+void SchreierSimsTest::groupSize3()
+{
+    SchreierStabChain stabChain(3, {"(1 2)", "(2 3)"});
+    DO_CHECK(stabChain.getGroupSize() == 6);
+}
+
+void SchreierSimsTest::groupSize4()
+{
+    SchreierStabChain stabChain(5, {"(1 2)", "(4 5 1)", "(2 4)"});
+    DO_CHECK(stabChain.getGroupSize() == 12);
 }
 
 

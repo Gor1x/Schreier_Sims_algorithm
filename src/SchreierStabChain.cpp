@@ -4,6 +4,7 @@
 #include <set>
 #include <iostream>
 
+
 SchreierStabChain::SchreierStabChain(size_t n, vector<Permutation> permutations) : count(n)
         , strongGenerators(std::move(permutations))
 {
@@ -56,9 +57,10 @@ void SchreierStabChain::build()
     for (int k = 1; currentG.size() > 0; k++)
     {
         base.push_back(k);
+        std::cout << "BaseElement: " << k << " | Размер образующих: " << currentG.size() << std::endl;
         trees.emplace_back(SchreierTree(currentG, base[k]));
-        trees.back().print();
-        std::cout << std::endl;
+        //trees.back().print();
+        //std::cout << std::endl;
         const auto &currentTree = trees.back();
         const auto &orbit = currentTree.getOrbit();
 
@@ -92,7 +94,7 @@ void SchreierStabChain::build()
 SchreierStabChain::SchreierStabChain(size_t n, std::initializer_list<std::string> list)
         : SchreierStabChain(n, getVectorFromList(list)) {}
 
-size_t SchreierStabChain::getSize() const
+size_t SchreierStabChain::getGroupSize() const
 {
     return groupSize;
 }
