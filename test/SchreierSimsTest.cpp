@@ -142,7 +142,7 @@ void SchreierSimsTest::treeTest1()
     DO_CHECK(gens[pNum.at(5)].toString() == "(1 3 5)"
              && gens[pNum.at(7)].toString() == "(3 7)"
              && gens[pNum.at(2)].toString() == "(2 8 7)"
-             && tree.getWay(2).toString() == "(1 5 3 7 8 2)");
+             && tree.calcWay(2).toString() == "(1 5 3 7 8 2)");
 }
 
 void SchreierSimsTest::treeTest2()
@@ -155,7 +155,7 @@ void SchreierSimsTest::treeTest2()
     DO_CHECK(gens[pNum.at(3)].toString() == "(1 3)"
              && gens[pNum.at(2)].toString() == "(1 2)"
              && gens[pNum.at(4)].toString() == "(2 4)"
-             && tree.getWay(4).toString() == "(1 2 4)");
+             && tree.calcWay(4).toString() == "(1 2 4)");
 }
 
 void SchreierSimsTest::treeTest3()
@@ -167,9 +167,9 @@ void SchreierSimsTest::treeTest3()
 
     DO_CHECK(gens[pNum.at(2)].toString() == "(2 3)"
              && gens[pNum.at(1)].toString() == "(1 3)"
-             && tree.getWay(2).toString() == "(2 3)"
-             && tree.getWay(3).toString() == "id"
-             && tree.getWay(1).toString() == "(1 3)");
+             && tree.calcWay(2).toString() == "(2 3)"
+             && tree.calcWay(3).toString() == "id"
+             && tree.calcWay(1).toString() == "(1 3)");
 }
 
 void SchreierSimsTest::orbitTest1()

@@ -17,22 +17,24 @@ public:
     void print() const;
 
     size_t size() const;
-
-    Permutation getWay(int k) const;
-
     const vector<int> &getOrbit() const;
 
     bool contains(int element) const;
 
     const vector<Permutation> &getTreePermutations() const;
 
+    Permutation getWay(int k) const;
+
 private:
+    Permutation calcWay(int k) const;
+
     void build();
 
     void fillTreePermutations();
 
     mutable std::set<int> orbitSet;
 
+    Permutation wayAt[55];
     std::vector<int> orbit;
     std::map<int, int> parentNumber;
     std::vector<Permutation> generators;

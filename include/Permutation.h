@@ -22,22 +22,22 @@ public:
     Permutation(const std::string &s);
     explicit Permutation(const Cycle &cycle);
 
+    Permutation(const char *str);
+
     Permutation &operator=(const Permutation &other) = default;
-
     size_t operator()(size_t k) const;
-
-    int getNext(int k) const;
-
-    Permutation &pow(int n);
-
-    Permutation &inverse();
-
-    int size() const;
 
     friend Permutation operator*(const Permutation &, const Permutation &);
 
-    std::string toString() const;
+    int getNext(int k) const;
 
+    Permutation &pow(long long int n);
+
+    Permutation &inverse();
+
+    Permutation getInversed() const;
+    int size() const;
+    std::string toString() const;
     void print() const;
 
     void swap(Permutation &other);

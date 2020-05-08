@@ -46,6 +46,11 @@ int Permutation::getNext(int k) const
 
 Permutation::Permutation(const string &s) : length(-1)
 {
+    if (s[0] != '(' || s.back() != ')')
+    {
+        throw std::logic_error("Неправильный формат ввода");
+    }
+
     vector<Cycle> cycles;
     size_t position = 0;
     while (true)
@@ -101,7 +106,7 @@ void Permutation::fillNextVectorToId()
     }
 }
 
-Permutation &Permutation::pow(int n)
+Permutation &Permutation::pow(long long int n)
 {
     if (n == 0)
     {
@@ -195,6 +200,16 @@ Permutation::Permutation(Permutation &&other) noexcept
 
 Permutation::Permutation(const vector<int> &next) : length(next.size() - 1)
         , next(next)
+{
+}
+
+Permutation Permutation::getInversed() const
+{
+    auto ans = *this;
+    return ans.inverse();
+}
+
+Permutation::Permutation(const char *str) : Permutation(string(str))
 {
 }
 

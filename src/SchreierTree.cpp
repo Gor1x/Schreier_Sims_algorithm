@@ -70,7 +70,7 @@ void SchreierTree::print() const
     }
 }
 
-Permutation SchreierTree::getWay(int k) const
+Permutation SchreierTree::calcWay(int k) const
 {
     Permutation answer;
     while (k != head)
@@ -127,6 +127,13 @@ void SchreierTree::fillTreePermutations()
 {
     for (auto v : orbit)
     {
-        treePermutations.emplace_back(getWay(v));
+        auto perm = calcWay(v);
+        wayAt[v] = perm;
+        treePermutations.emplace_back(perm);
     }
+}
+
+Permutation SchreierTree::getWay(int k) const
+{
+    return wayAt[k];
 }

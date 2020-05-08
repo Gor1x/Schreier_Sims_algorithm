@@ -5,9 +5,11 @@
 #include <iostream>
 
 
-SchreierStabChain::SchreierStabChain(size_t n, vector<Permutation> permutations) : count(n)
+SchreierStabChain::SchreierStabChain(size_t n, vector<Permutation> permutations, bool DEBUG) : count(n)
         , strongGenerators(std::move(permutations))
+        , DEBUG(DEBUG)
 {
+    base.reserve(n);
     base.push_back(0);
     build();
 }
@@ -24,9 +26,7 @@ static vector<Permutation> getVectorFromList(const std::initializer_list<std::st
 }
 
 static void processPermutation(Permutation &permutation,
-                               vector<Permutation> &newG,
-                               size_t count,
-                               std::map<std::pair<int, int>, Permutation> &used)
+                               vector<Permutation> &newG, size_t count, Permutation used2[55][55])
 {
     for (size_t i = 1; i <= count; i++)
     {
@@ -37,14 +37,13 @@ static void processPermutation(Permutation &permutation,
         else
         {
             int j = permutation(i);
-            auto pair = std::pair<int, int>(i, j);
-            if (used.count(pair))
+            if (used2[i][j].size() != 0)
             {
-                permutation = permutation.inverse() * used[pair];
+                permutation = permutation.inverse() * used2[i][j];
             }
             else
             {
-                used[pair] = permutation;
+                used2[i][j] = permutation;
                 newG.push_back(permutation);
             }
         }
@@ -57,16 +56,19 @@ void SchreierStabChain::build()
     for (int k = 1; currentG.size() > 0; k++)
     {
         base.push_back(k);
-        std::cout << "BaseElement: " << k << " | Размер образующих: " << currentG.size() << std::endl;
         trees.emplace_back(SchreierTree(currentG, base[k]));
-        //trees.back().print();
-        //std::cout << std::endl;
+
+        if (DEBUG)
+        {
+            std::cout << "BaseElement: " << k << " | образующих: " << currentG.size() << " | Размер дерева Шрайера: "
+                      << trees.back().size() << std::endl;
+        }
+
         const auto &currentTree = trees.back();
         const auto &orbit = currentTree.getOrbit();
 
         vector<Permutation> newG;
-
-        std::map<std::pair<int, int>, Permutation> used;
+        Permutation used2[55][55];
 
         for (auto y : orbit)
         {
@@ -77,24 +79,26 @@ void SchreierStabChain::build()
 
                 auto permutation = currentTree.getWay(perm.getNext(y)) * perm * currentTree.getWay(y).inverse();
 
-                auto str = permutation.toString();
-                processPermutation(permutation, newG, count, used);
+                //auto str = permutation.toString();
+                processPermutation(permutation, newG, count, used2);
             }
         }
         currentG.swap(newG);
     }
 
-    size_t pr = 1;
+    groupSize = 1;
     for (const auto &tree : trees)
-        pr *= tree.size();
-    groupSize = pr;
+        groupSize *= tree.size();
+
     baseSize = base.size();
 }
 
 SchreierStabChain::SchreierStabChain(size_t n, std::initializer_list<std::string> list)
-        : SchreierStabChain(n, getVectorFromList(list)) {}
+        : SchreierStabChain(n, getVectorFromList(list), 0)
+{
+}
 
-size_t SchreierStabChain::getGroupSize() const
+BigInteger SchreierStabChain::getGroupSize() const
 {
     return groupSize;
 }

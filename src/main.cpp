@@ -1,15 +1,20 @@
 #include <iostream>
 #include <vector>
 
-#include <gmpxx.h>
-
 #include "Permutation.h"
 #include "SchreierTree.h"
 #include "SchreierStabChain.h"
+
 using namespace std;
+
+static void showPermutations()
+{
+    cout << "Building: " << endl;
+}
 
 int main()
 {
-    mpz_class a = 1;
+    freopen("output.txt", "w", stdout);
+    showPermutations();
     return 0;
 }

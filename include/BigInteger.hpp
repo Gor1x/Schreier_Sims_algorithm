@@ -16,7 +16,7 @@ private:
     std::vector<int> mDigits;
 
     // знак числа
-    bool mIsNegative;
+    bool mIsNegative = false;
 
     void mRemoveLeadingZeros();
 

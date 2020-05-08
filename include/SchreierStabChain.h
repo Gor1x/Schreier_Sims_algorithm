@@ -2,14 +2,15 @@
 #define SCHREIER_SIMS_ALGORITHM_SCHREIERSTABCHAIN_H
 
 #include "SchreierTree.h"
+#include "BigInteger.hpp"
 
 class SchreierStabChain
 {
 public:
-    SchreierStabChain(size_t n, vector<Permutation> permutations);
+    SchreierStabChain(size_t n, vector<Permutation> permutations, bool DEBUG);
     SchreierStabChain(size_t n, std::initializer_list<std::string> strs);
 
-    size_t getGroupSize() const;
+    BigInteger getGroupSize() const;
     size_t getBaseSize() const;
 
     bool hasPermutation(Permutation permutation);
@@ -27,9 +28,11 @@ private:
     vector<Permutation> strongGenerators;
     vector<SchreierTree> trees;
 
-    size_t groupSize = 0;
+    BigInteger groupSize = 0;
     size_t baseSize = 0;
-    vector<size_t> base;
+    vector<int> base;
+
+    const bool DEBUG;
 };
 
 #endif //SCHREIER_SIMS_ALGORITHM_SCHREIERSTABCHAIN_H
