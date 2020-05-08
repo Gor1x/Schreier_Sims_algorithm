@@ -55,7 +55,6 @@ void SchreierTree::build()
     for (auto v : parentNumber)
         orbit.push_back(v.first);
     sort(orbit.begin(), orbit.end());
-
 }
 
 void SchreierTree::print() const

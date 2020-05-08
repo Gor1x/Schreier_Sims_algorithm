@@ -22,6 +22,9 @@ private:
     static void runTreeTests();
     static void runPermutationTests();
 
+    static void runStabChainTests();
+
+
     static void stringConstructor1();
     static void stringConstructor2();
 
@@ -45,14 +48,9 @@ private:
 
     static void orbitContains3();
 
-    static void runStabChainTests();
-
     static void groupSize1();
-
     static void groupSize2();
-
     static void groupSize3();
-
     static void groupSize4();
 };
 
